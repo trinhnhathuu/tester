@@ -1,7 +1,7 @@
 import unittest
-
+import random
 import time
-
+from Test2.readexel.readbook1 import read_excel
 from prompt_toolkit.contrib.telnet.protocol import EC
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -17,15 +17,16 @@ class TestCmtFB(unittest.TestCase):
         self.browser.quit()
 
     def loginfb(self):
+        exel = read_excel(self)
         # Navigate to facebook.com
-        self.browser.get("https://www.facebook.com")
+        self.browser.get(exel[0])
         self.browser.maximize_window()
         user_name = self.browser.find_element(By.ID, "email")
         # enter email
-        user_name.send_keys("prothandao@gmail.com")
+        user_name.send_keys(exel[1])
         pass_word = self.browser.find_element(By.ID, "pass")
         # enter password
-        pass_word.send_keys("0898641520@a")
+        pass_word.send_keys(exel[2])
 
         btn_login = self.browser.find_element(By.NAME,"login")
         # click login
@@ -34,6 +35,7 @@ class TestCmtFB(unittest.TestCase):
         self.browser.find_element(By.XPATH,'//*[@id="facebook"]/body').click()
 
     def test_auto_cmt(self):
+        exel = read_excel(self)
         self.loginfb()
         # Navigate to https://www.facebook.com/minh.dai.de
         self.browser.get("https://www.facebook.com/minh.dai.de")
@@ -55,10 +57,12 @@ class TestCmtFB(unittest.TestCase):
         for i in range(0, len(b)):
             b[i].click()
 
-            b[i].send_keys('a minh ơi a a a a a a a ')
+            b[i].send_keys( random.choice(exel[3:5]))
             b[i].send_keys(Keys.ENTER)
             time.sleep(10)
     def test_auto_cmt_img(self):
+        #
+        exel = read_excel(self)
         self.loginfb()
         self.browser.get("https://www.facebook.com/minh.dai.de")
         time.sleep(4)
@@ -76,14 +80,18 @@ class TestCmtFB(unittest.TestCase):
         input_cmt = self.browser.find_elements(By.XPATH, '//div[@class="xzsf02u x1a2a7pz x1n2onr6 x14wi4xw notranslate"]')
         for btn, icon, inp in zip(btn_cmt, icon_camera, input_cmt):
             btn.click()
-            icon.send_keys('D:\\tester\\Code\\test1.jpg')
+            icon.send_keys(random.choice(exel[6:8]))
             time.sleep(10)
             inp.click()
             inp.send_keys(Keys.ENTER)
             time.sleep(5)
 
     def test_auto_cmt_text_img(self):
+        # Lấy dữ liệu từ file excel
+        exel = read_excel(self)
+        # Đăng nhập
         self.loginfb()
+        # Navigate to https://www.facebook.com/minh.dai.de
         self.browser.get("https://www.facebook.com/minh.dai.de")
         time.sleep(4)
         # Click screen
@@ -100,10 +108,10 @@ class TestCmtFB(unittest.TestCase):
         input_cmt = self.browser.find_elements(By.XPATH, '//div[@class="xzsf02u x1a2a7pz x1n2onr6 x14wi4xw notranslate"]')
         for btn, icon, inp in zip(btn_cmt, icon_camera, input_cmt):
             btn.click()
-            icon.send_keys('D:\\tester\\Code\\test1.jpg')
+            icon.send_keys(random.choice(exel[6:8]))
             time.sleep(10)
             inp.click()
-            inp.send_keys('cmt test')
+            inp.send_keys(random.choice(exel[3:6]))
             inp.send_keys(Keys.ENTER)
             time.sleep(5)
 

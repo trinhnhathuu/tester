@@ -15,8 +15,8 @@ browser.maximize_window()
 
 #function login
 def login():
-    user_name = browser.find_element(By.ID, "email").send_keys("0366162848")
-    pass_word = browser.find_element(By.ID, "pass").send_keys("Tungpro312")
+    user_name = browser.find_element(By.ID, "email").send_keys("prothandao@gmail.com")
+    pass_word = browser.find_element(By.ID, "pass").send_keys("0898641520@")
     btn_login = browser.find_element(By.NAME,"login").click()
     actions = ActionChains(browser)
     actions.key_down(Keys.ENTER)
